@@ -15,3 +15,7 @@ type ScreenName = keyof RootStackParams;
 export const useParams = <T extends ScreenName>(screen: T) => {
   return useRoute<RouteProp<RootStackParams, T>>().params;
 };
+
+export const useRouter = () => {
+  return useRoute<RouteProp<RootStackParams>>();
+};

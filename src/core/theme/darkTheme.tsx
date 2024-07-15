@@ -1,7 +1,7 @@
 import { colors } from '../constans/colors';
 import { themes } from '../constans/theme';
 
-const darkTheme = {
+export const darkTheme = {
   name: themes.DARK,
   colors: {
     bg: {

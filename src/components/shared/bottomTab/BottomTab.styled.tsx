@@ -1,6 +1,19 @@
+import { Theme } from '@/core/types/theme.type';
 import styled from 'styled-components/native';
 
-export const CustomBottomTab = styled.View`
+export const CustomBottomTab = styled.View<{ theme: Theme }>`
   height: 80px;
-  background-color: red;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.bg.primary};
+`;
+
+export const TabContainer = styled.View<{ theme: Theme }>`
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 `;
