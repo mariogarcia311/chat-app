@@ -10,9 +10,10 @@ export type RootStackParams = {
   Home: undefined;
   HomeScreen: undefined;
   Chat: { id: string };
-  Chats: { userId: string };
+  Chats: undefined;
   Communities: undefined;
   News: undefined;
+  Calls: undefined;
 };
 
 function IndexNavigation(): React.JSX.Element {

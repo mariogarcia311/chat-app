@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import styled from 'styled-components/native';
-import { useRootNavigation } from '@/hooks/useRootNavigation';
+import { useRootNavigation, useRouter } from '@/hooks/useRootNavigation';
 
 type HomeScreenProps = {
   navigation: NavigationProp<any>;

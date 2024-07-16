@@ -4,11 +4,11 @@ import { NavigationProp } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { useRootNavigation } from '@/hooks/useRootNavigation';
 
-type CommunitiesScreenProps = {
+type CallsScreenProps = {
   navigation: NavigationProp<any>;
 };
 
-const CommunitiesScreen: React.FC<CommunitiesScreenProps> = () => {
+const CallsScreen: React.FC<CallsScreenProps> = () => {
   const navigation = useRootNavigation();
 
   const UserName = styled.Text`
@@ -20,7 +20,7 @@ const CommunitiesScreen: React.FC<CommunitiesScreenProps> = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View>
-        <UserName>CommunitiesScreen</UserName>
+        <UserName>CallsScreen</UserName>
       </View>
     </SafeAreaView>
   );
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CommunitiesScreen;
+export default CallsScreen;
