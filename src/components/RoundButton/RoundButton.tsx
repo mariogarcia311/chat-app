@@ -3,19 +3,21 @@ import { TouchableHighlight } from 'react-native';
 
 interface RoundButtonProps {
   children: ReactNode;
-  onPress?: void;
+  onPress?: any;
   disabled?: boolean;
+  padding?: number;
 }
 
 export const RoundButton: React.FC<RoundButtonProps> = ({
   children,
   onPress = () => {},
+  padding = 5,
   ...restProps
 }) => {
   return (
     <TouchableHighlight
       underlayColor="rgba(255, 255, 255, 0.08)"
-      style={{ borderRadius: 100, padding: 5 }}
+      style={{ borderRadius: 100, padding: padding }}
       onPress={onPress}
       {...restProps}>
       {children}

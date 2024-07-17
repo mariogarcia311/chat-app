@@ -27,6 +27,7 @@ export const darkTheme = {
     font: {
       primary: colors.silver[50],
       secondary: colors.silver[500],
+      tertiary: colors.limeGreen[500],
     },
     divider: {
       primary: colors.deepSea[400],

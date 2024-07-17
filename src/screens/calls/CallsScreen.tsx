@@ -3,6 +3,7 @@ import { View, SafeAreaView, StyleSheet } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { useRootNavigation } from '@/hooks/useRootNavigation';
+import { OverlayContainer } from '@/components/shared/OverlayContainer/OverlayContainer';
 
 type CallsScreenProps = {
   navigation: NavigationProp<any>;
@@ -18,11 +19,11 @@ const CallsScreen: React.FC<CallsScreenProps> = () => {
     color: #010101;
   `;
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <OverlayContainer style={styles.safeArea}>
       <View>
         <UserName>CallsScreen</UserName>
       </View>
-    </SafeAreaView>
+    </OverlayContainer>
   );
 };
 

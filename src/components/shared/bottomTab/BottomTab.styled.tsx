@@ -8,7 +8,6 @@ export const CustomBottomTab = styled.View<{ theme: Theme }>`
   justify-content: space-around;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.bg.primary};
-  border-block-end: 2px solid #000;
   border-top-width: 1px;
   border-top-color: ${({ theme }) => theme.colors.divider.primary};
 `;

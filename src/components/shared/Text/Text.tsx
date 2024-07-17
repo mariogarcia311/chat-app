@@ -3,7 +3,7 @@ import { StyledText } from './Text.styled';
 
 export interface TextProps {
   children: ReactNode;
-  color?: 'primary' | 'secondary';
+  color?: 'primary' | 'secondary' | 'tertiary';
   size: number;
   weight?: number;
 }

@@ -1,5 +1,5 @@
 import { Theme } from '@/core/types/theme.type';
-import React, { ElementRef, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View } from 'react-native';
 import styled, { useTheme } from 'styled-components/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -21,7 +21,7 @@ const IconSearchContiner = styled.View<{ theme: Theme }>`
 `;
 export const Search = () => {
   const [isFocused, setIsFocused] = useState(false);
-  const theme = { ...useTheme() };
+  const theme = useTheme();
   const inputRef = useRef<any>(null);
 
   const removeFocus: any = () => {

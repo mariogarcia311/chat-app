@@ -3,6 +3,7 @@ import { View, SafeAreaView, StyleSheet } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { useRootNavigation } from '@/hooks/useRootNavigation';
+import { OverlayContainer } from '@/components/shared/OverlayContainer/OverlayContainer';
 
 type CommunitiesScreenProps = {
   navigation: NavigationProp<any>;
@@ -18,11 +19,11 @@ const CommunitiesScreen: React.FC<CommunitiesScreenProps> = () => {
     color: #010101;
   `;
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <OverlayContainer style={styles.safeArea}>
       <View>
         <UserName>CommunitiesScreen</UserName>
       </View>
-    </SafeAreaView>
+    </OverlayContainer>
   );
 };
 
