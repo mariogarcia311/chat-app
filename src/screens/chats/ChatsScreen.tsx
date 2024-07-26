@@ -1,6 +1,6 @@
 import { ChatList } from '@/components/ChatList/ChatList';
 import { Search } from '@/components/Search/Search';
-import { OverlayContainer } from '@/components/shared/OverlayContainer/OverlayContainer';
+
 import { useParams, useRootNavigation } from '@/hooks/useRootNavigation';
 import * as React from 'react';
 import { View } from 'react-native';

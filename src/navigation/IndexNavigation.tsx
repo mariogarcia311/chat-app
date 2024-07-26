@@ -4,6 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ChatScreen from '@/screens/chats/ChatScreen';
 import HomeScreenRoutes from './HomeStackNavigation';
 import { KeyboardAvoidingView, SafeAreaView } from 'react-native';
+import { AuthProvider } from '@/context/AuthContext';
+import LoginScreen from '@/screens/login/LoginScreen';
+import { LoadingProvider } from '@/context/LoadingContext';
 
 const Stack = createNativeStackNavigator<RootStackParams>();
 export type RootStackParams = {
@@ -14,21 +17,35 @@ export type RootStackParams = {
   Communities: undefined;
   News: undefined;
   Calls: undefined;
+  Login: undefined;
 };
 
 function IndexNavigation(): React.JSX.Element {
+  const [currentRoute, setCurrentRoute] = React.useState<string | null>(null);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#101D25' }}>
       <KeyboardAvoidingView
         style={{ flex: 1, backgroundColor: '#101D25' }}
         behavior={'padding'}>
         <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="HomeScreen"
-            screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Chat" component={ChatScreen} />
-            <Stack.Screen name="HomeScreen" component={HomeScreenRoutes} />
-          </Stack.Navigator>
+          <LoadingProvider>
+            <AuthProvider currentRoute={currentRoute}>
+              <Stack.Navigator
+                initialRouteName="HomeScreen"
+                screenOptions={{ headerShown: false }}
+                screenListeners={{
+                  state: e => {
+                    const routeName =
+                      e.data.state.routes[e.data.state.index].name;
+                    setCurrentRoute(routeName);
+                  },
+                }}>
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Chat" component={ChatScreen} />
+                <Stack.Screen name="HomeScreen" component={HomeScreenRoutes} />
+              </Stack.Navigator>
+            </AuthProvider>
+          </LoadingProvider>
         </NavigationContainer>
       </KeyboardAvoidingView>
     </SafeAreaView>

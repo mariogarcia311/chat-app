@@ -1,26 +1,17 @@
-import { BottomTab } from '@/components/shared/bottomTab/BottomTab';
+import { BottomTab } from '@/components/shared/BottomTab/BottomTab';
 import { HeaderTab } from '@/components/shared/HeaderTab/HeaderTab';
 import CallsScreen from '@/screens/calls/CallsScreen';
 import ChatsScreen from '@/screens/chats/ChatsScreen';
 import CommunitiesScreen from '@/screens/communities/CommunitiesScreen';
-import HomeScreen from '@/screens/home/HomeScreen';
 import NewsScreen from '@/screens/news/NewsScreen';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState } from 'react';
 import { View } from 'react-native';
+import { RootStackParams } from './IndexNavigation';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParams>();
-export type RootStackParams = {
-  Home: undefined;
-  HomeScreen: undefined;
-  Chat: { id: string };
-  Chats: undefined;
-  Communities: undefined;
-  News: undefined;
-  Calls: undefined;
-};
 
 function HomeScreenRoutes(): React.JSX.Element {
   const [routeName, setRouteName] = useState('Chats');
@@ -44,7 +35,6 @@ function HomeTabNavigation({ setRouteName }: any): React.JSX.Element {
       screenListeners={{
         state: e => {
           const routeName = e.data.state.routes[e.data.state.index].name;
-          console.log(routeName);
           setRouteName(routeName);
         },
       }}>
