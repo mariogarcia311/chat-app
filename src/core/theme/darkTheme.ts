@@ -11,6 +11,9 @@ export const darkTheme = {
     },
     input: {
       bg: { primary: colors.slate[500] },
+      border: {
+        tertiary: colors.limeGreen[500],
+      },
     },
     card: {
       bg: {

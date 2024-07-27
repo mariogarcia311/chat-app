@@ -7,7 +7,7 @@ export const StepsLogin = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const components = [
     <PhoneLogin key={1} setUserId={setUserId} />,
-    <ValidateOtp key={2} />,
+    <ValidateOtp key={2} userId={userId} />,
   ];
   return (
     <StepsLoginContainer>

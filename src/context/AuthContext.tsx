@@ -1,3 +1,4 @@
+import { validateOtpApi } from '@/api/apiLogin';
 import { privateRoutes } from '@/core/constans/auth/auth';
 import { useRootNavigation } from '@/hooks/useRootNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,10 +11,13 @@ import React, {
   useMemo,
   useEffect,
 } from 'react';
+import { useLoadingContext } from './LoadingContext';
 
 interface AuthContextType {
   token: string | null;
   setToken: (token: string | null) => void;
+  closeSession: Function;
+  validateOtp: Function;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,6 +31,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
   children,
   currentRoute = '',
 }) => {
+  const { setLoading } = useLoadingContext();
   const [token, setToken] = useState<string | null>(null);
 
   const navigation = useRootNavigation();
@@ -63,11 +68,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     fetchToken();
   }, [token, currentRoute]);
 
+  const validateOtp = async ({ userId, code }: any) => {
+    try {
+      setLoading(true);
+      const resp = await validateOtpApi({ userId, code });
+      console.log(resp.data.token);
+      if (resp.data.token) {
+        await AsyncStorage.setItem('token', resp.data.token);
+        setToken(resp.data.token);
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const data = useMemo(() => {
     return {
       token,
       setToken,
       closeSession,
+      validateOtp,
     };
   }, [token, setToken, closeSession]);
 

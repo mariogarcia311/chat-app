@@ -8,6 +8,7 @@ import {
 import { Text } from '@/components/shared/Text/Text';
 import { useTheme } from 'styled-components/native';
 import { loginApi } from '@/api/apiLogin';
+import { useLoadingContext } from '@/context/LoadingContext';
 
 interface PhoneLoginProps {
   setUserId: (id: string | null) => void;
@@ -16,16 +17,19 @@ interface PhoneLoginProps {
 export const PhoneLogin: React.FC<PhoneLoginProps> = ({ setUserId }) => {
   const [countryCode, setCountryCode] = useState('57');
   const [cellPhone, setCellPhone] = useState('3127324260');
+  const { setLoading } = useLoadingContext();
   const theme = useTheme();
 
   const handleLogin = async () => {
+    setLoading(true);
     if (!!countryCode && !!cellPhone) {
       try {
         const resp = await loginApi({ countryCode, cellPhone });
         console.log(resp);
-        setUserId('resp.userId');
+        setUserId(resp.userId);
       } catch (error) {
-        console.log(error);
+      } finally {
+        setLoading(false);
       }
     }
   };

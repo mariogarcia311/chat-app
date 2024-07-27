@@ -3,7 +3,6 @@ import { Animated, Easing, Modal, View } from 'react-native';
 import { LoadingOverlay } from './Loading.styled';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useTheme } from 'styled-components/native';
-import { BlurView } from '@react-native-community/blur';
 
 export const Loading = () => {
   const [visible, setVisible] = useState(true);
@@ -34,7 +33,15 @@ export const Loading = () => {
       animationType="fade"
       visible={visible}
       onRequestClose={() => {}}>
-      <LoadingOverlay blurType="dark" blurAmount={11}>
+      <LoadingOverlay blurType="dark" blurAmount={11}></LoadingOverlay>
+      <View
+        style={{
+          width: '100%',
+          position: 'absolute',
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
         <Animated.View style={{ transform: [{ rotate }] }}>
           <FontAwesome
             name="spinner"
@@ -42,7 +49,7 @@ export const Loading = () => {
             color={theme.colors.font.tertiary}
           />
         </Animated.View>
-      </LoadingOverlay>
+      </View>
     </Modal>
   );
 };
