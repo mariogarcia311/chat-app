@@ -51,7 +51,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         try {
           const tokenStorage = await AsyncStorage.getItem('token');
           if (privateRoutes.includes(currentRoute) && !tokenStorage) {
-            navigation.navigate('Login');
+            // navigation.navigate('Login');
           } else {
             setToken(tokenStorage);
           }
@@ -60,7 +60,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         }
       } else {
         if (!privateRoutes.includes(currentRoute)) {
-          navigation.navigate('HomeScreen');
+          // navigation.navigate('HomeScreen');
         }
       }
     };

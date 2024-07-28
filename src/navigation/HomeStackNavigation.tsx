@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { RootStackParams } from './IndexNavigation';
+import { HomeFAB } from '@/components/Home/HomeFAB/HomeFAB';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParams>();
@@ -20,6 +21,7 @@ function HomeScreenRoutes(): React.JSX.Element {
       <HeaderTab routeName={routeName} />
       <HomeTabNavigation setRouteName={setRouteName} />
       <BottomTab routeName={routeName} />
+      <HomeFAB />
     </View>
   );
 }

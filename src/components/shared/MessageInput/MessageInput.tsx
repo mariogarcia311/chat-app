@@ -5,7 +5,7 @@ import styled, { useTheme } from 'styled-components/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { RoundButton } from '@/components/RoundButton/RoundButton';
+import { RoundButton } from '@/components/shared/RoundButton/RoundButton';
 import { SendButtonContainer, SendIcon } from './MessageInput.styled';
 
 const StyledInput = styled.TextInput<{ theme: Theme; ref: any }>`

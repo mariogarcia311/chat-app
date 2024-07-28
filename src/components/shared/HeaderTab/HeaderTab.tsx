@@ -4,7 +4,7 @@ import { useTheme } from 'styled-components/native';
 import { useRootNavigation } from '@/hooks/useRootNavigation';
 import { CustomHeaderTab } from './HeaderTab.styled';
 import { View } from 'react-native';
-import { RoundButton } from '@/components/RoundButton/RoundButton';
+import { RoundButton } from '@/components/shared/RoundButton/RoundButton';
 
 export const HeaderTab = ({ routeName }: { routeName: string }) => {
   const theme = useTheme();

@@ -7,6 +7,7 @@ import { KeyboardAvoidingView, SafeAreaView } from 'react-native';
 import { AuthProvider } from '@/context/AuthContext';
 import LoginScreen from '@/screens/login/LoginScreen';
 import { LoadingProvider } from '@/context/LoadingContext';
+import ContactsScreen from '@/screens/contacts/ContactsScreen';
 
 const Stack = createNativeStackNavigator<RootStackParams>();
 export type RootStackParams = {
@@ -18,6 +19,7 @@ export type RootStackParams = {
   News: undefined;
   Calls: undefined;
   Login: undefined;
+  Contacts: undefined;
 };
 
 function IndexNavigation(): React.JSX.Element {
@@ -43,6 +45,7 @@ function IndexNavigation(): React.JSX.Element {
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="Chat" component={ChatScreen} />
                 <Stack.Screen name="HomeScreen" component={HomeScreenRoutes} />
+                <Stack.Screen name="Contacts" component={ContactsScreen} />
               </Stack.Navigator>
             </AuthProvider>
           </LoadingProvider>

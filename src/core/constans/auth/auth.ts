@@ -6,4 +6,5 @@ export const privateRoutes = [
   'Communities',
   'News',
   'Calls',
+  'Contacts',
 ];

@@ -956,6 +956,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-contacts (7.0.8):
+    - React-Core
   - react-native-pager-view (6.3.3):
     - DoubleConversion
     - glog
@@ -1271,6 +1273,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
+  - react-native-contacts (from `../node_modules/react-native-contacts`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
@@ -1369,6 +1372,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-blur:
     :path: "../node_modules/@react-native-community/blur"
+  react-native-contacts:
+    :path: "../node_modules/react-native-contacts"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
@@ -1460,6 +1465,7 @@ SPEC CHECKSUMS:
   React-logger: 7e7403a2b14c97f847d90763af76b84b152b6fce
   React-Mapbuffer: 11029dcd47c5c9e057a4092ab9c2a8d10a496a33
   react-native-blur: a2acf22fd7bd13621df5e0b1c130b81adea7009c
+  react-native-contacts: cb4f3b823550adbce0802901b9e63bf1526ec0af
   react-native-pager-view: f848f89049a8e888d38f10ff31588eb63292a95f
   react-native-safe-area-context: dcab599c527c2d7de2d76507a523d20a0b83823d
   React-nativeconfig: b0073a590774e8b35192fead188a36d1dca23dec
@@ -1491,6 +1497,6 @@ SPEC CHECKSUMS:
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: 348f8b538c3ed4423eb58a8e5730feec50bce372
 
-PODFILE CHECKSUM: f2444f2d3372ca80bfaa1fc4b62107921d756d0e
+PODFILE CHECKSUM: b0e1c9210a6bdaac3a8e114d2b6a847eb94ed76e
 
 COCOAPODS: 1.12.1

@@ -23,6 +23,10 @@ export const darkTheme = {
     },
     btn: {
       primary: colors.limeGreen[500],
+      pressedPrimary: colors.limeGreen[700],
+    },
+    btnFont: {
+      primary: colors.deepSea[500],
     },
     tabs: {
       bgSelected: colors.limeGreen[800],

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableHighlight, View } from 'react-native';
+import { View } from 'react-native';
 import {
   ChatContainer,
   ChatMessageContainer,

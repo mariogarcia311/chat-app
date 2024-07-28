@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { View } from 'react-native';
 import styled, { useTheme } from 'styled-components/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { RoundButton } from '../RoundButton/RoundButton';
+import { RoundButton } from '../shared/RoundButton/RoundButton';
 
 const StyledInput = styled.TextInput<{ theme: Theme; ref: any }>`
   background-color: ${({ theme }) => theme.colors.input.bg.primary};

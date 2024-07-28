@@ -7,5 +7,5 @@
       "@assets/*": ["./assets/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "includes": ["src/**/*.ts", "src/**/*.tsx", "types/styled.d.ts"]
 }

@@ -8,7 +8,7 @@ import {
   HeaderChatRow,
   MessagesContainer,
 } from './Chat.styled';
-import { RoundButton } from '../RoundButton/RoundButton';
+import { RoundButton } from '../shared/RoundButton/RoundButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTheme } from 'styled-components/native';

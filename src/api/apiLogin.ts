@@ -8,8 +8,8 @@ import {
 } from './interfaces/apiLogin.interfaces';
 import DeviceInfo from 'react-native-device-info';
 
-// const url = `http://localhost:10000`;
-const url = 'http://192.168.1.2:10000';
+const url = `http://localhost:10000`;
+// const url = 'http://192.168.1.2:10000';
 // const url = 'https://chat-mario-backend-latest.onrender.com';
 
 export const loginApi = async ({
