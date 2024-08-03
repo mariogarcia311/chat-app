@@ -7,10 +7,9 @@ import {
   ValidateOtpAPIResponse,
 } from './interfaces/apiLogin.interfaces';
 import DeviceInfo from 'react-native-device-info';
+import { apiUrl } from '@/core/config/config';
 
-const url = `http://localhost:10000`;
-// const url = 'http://192.168.1.2:10000';
-// const url = 'https://chat-mario-backend-latest.onrender.com';
+const url = apiUrl;
 
 export const loginApi = async ({
   cellPhone,

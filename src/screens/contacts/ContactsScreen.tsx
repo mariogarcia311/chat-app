@@ -1,5 +1,6 @@
 import { ContactList } from '@/components/Contacts/ContactList';
-import { Text } from '@/components/shared/Text/Text';
+import { useAuthContext } from '@/context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { parsePhoneNumber } from 'libphonenumber-js';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
@@ -15,10 +16,12 @@ import { useTheme } from 'styled-components/native';
 interface MappedContact {
   name: string;
   phone: string;
+  completePhone: string;
 }
 const ContactsScreen = ({ navigation }: any) => {
+  const { user } = useAuthContext();
   const theme = useTheme();
-  const myPhone = '573127324260';
+  const myPhone = user?.completePhone;
   const myCountry = useMemo(
     () => parsePhoneNumber(`+${myPhone}`).country,
     [myPhone],
@@ -76,28 +79,45 @@ const ContactsScreen = ({ navigation }: any) => {
 
   const getContacts = async () => {
     try {
+      const storageContacts = (await AsyncStorage.getItem('contacts')) ?? '';
+      storageContacts && setContacts(JSON.parse(storageContacts));
       const contacts = await Contacts.getAllWithoutPhotos();
       const contactsReal = contacts.filter(
         _cont => _cont.phoneNumbers.length !== 0,
       );
 
-      const mappedContactsReal = contactsReal.map(_cont => {
-        const phoneNumberRaw = _cont.phoneNumbers[0].number;
-        const phoneNumber = phoneNumberRaw.includes('+')
-          ? parsePhoneNumber(phoneNumberRaw)
-          : parsePhoneNumber(phoneNumberRaw, myCountry);
+      const mappedContactsReal = contactsReal
+        .map(_cont => {
+          const phoneNumberRaw = _cont.phoneNumbers[0].number;
+          const phoneNumber = phoneNumberRaw.includes('+')
+            ? parsePhoneNumber(phoneNumberRaw)
+            : parsePhoneNumber(phoneNumberRaw, myCountry);
 
-        const phone = phoneNumber.isValid()
-          ? phoneNumber.number
-          : phoneNumberRaw;
+          const phone = phoneNumber.isValid()
+            ? phoneNumber.number
+            : phoneNumberRaw;
+          return {
+            name: _cont.givenName,
+            phone,
+            completePhone: phone.replace('+', ''),
+            isValid: phoneNumber.isValid(),
+          };
+        })
+        .sort((a, b) => {
+          if (a.name < b.name) return -1;
+          if (a.name > b.name) return 1;
+          return 0;
+        })
+        .filter(({ isValid }) => isValid);
 
-        return {
-          name: _cont.givenName,
-          phone,
-        };
-      });
-
+      if (storageContacts === JSON.stringify(mappedContactsReal)) {
+        return;
+      }
       setContacts(mappedContactsReal);
+      await AsyncStorage.setItem(
+        'contacts',
+        JSON.stringify(mappedContactsReal),
+      );
     } catch (error) {
       console.warn('Error fetching contacts:', error);
     }

@@ -25,7 +25,6 @@ export const PhoneLogin: React.FC<PhoneLoginProps> = ({ setUserId }) => {
     if (!!countryCode && !!cellPhone) {
       try {
         const resp = await loginApi({ countryCode, cellPhone });
-        console.log(resp);
         setUserId(resp.userId);
       } catch (error) {
       } finally {

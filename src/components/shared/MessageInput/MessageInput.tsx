@@ -33,24 +33,31 @@ const FileMessageInputContainer = styled.View<{ theme: Theme }>`
   gap: 5px;
 `;
 
-export const MessageInput = () => {
-  const [inputValue, setInputValue] = useState('');
+export const MessageInput = ({
+  inputValue,
+  setInputValue,
+  handleSend,
+}: any) => {
   const theme = useTheme();
   const inputRef = useRef<any>(null);
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
-    Animated.spring(scaleAnim, {
-      toValue: 1.8,
-      useNativeDriver: true,
-    }).start();
+    handleSend();
+    setInputValue('');
+    !inputValue &&
+      Animated.spring(scaleAnim, {
+        toValue: 1.8,
+        useNativeDriver: true,
+      }).start();
   };
 
   const handlePressOut = () => {
-    Animated.spring(scaleAnim, {
-      toValue: 1,
-      useNativeDriver: true,
-    }).start();
+    !inputValue &&
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        useNativeDriver: true,
+      }).start();
   };
 
   const handleChangeText = (text: string) => {

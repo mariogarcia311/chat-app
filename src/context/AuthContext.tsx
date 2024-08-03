@@ -1,5 +1,5 @@
 import { validateOtpApi } from '@/api/apiLogin';
-import { privateRoutes } from '@/core/constans/auth/auth';
+import { privateRoutes } from '@/core/constants/auth/auth';
 import { useRootNavigation } from '@/hooks/useRootNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -12,12 +12,15 @@ import React, {
   useEffect,
 } from 'react';
 import { useLoadingContext } from './LoadingContext';
+import { View } from 'react-native';
+import { User } from '@/api/interfaces/apiLogin.interfaces';
 
 interface AuthContextType {
   token: string | null;
   setToken: (token: string | null) => void;
   closeSession: Function;
   validateOtp: Function;
+  user: User | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,6 +36,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 }) => {
   const { setLoading } = useLoadingContext();
   const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [authLoading, setAuthLoading] = useState<boolean>(true);
 
   const navigation = useRootNavigation();
 
@@ -46,22 +51,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
       if (!currentRoute) {
         return;
       }
-
-      if (!token) {
-        try {
+      try {
+        if (!token) {
           const tokenStorage = await AsyncStorage.getItem('token');
+          const stringUserStorage = await AsyncStorage.getItem('user');
+          const userStorage = stringUserStorage
+            ? JSON.parse(stringUserStorage)
+            : null;
           if (privateRoutes.includes(currentRoute) && !tokenStorage) {
-            // navigation.navigate('Login');
+            navigation.navigate('Login');
           } else {
             setToken(tokenStorage);
+            setUser(userStorage);
           }
-        } catch (error) {
-          console.error('Failed to fetch the token', error);
+        } else {
+          if (!privateRoutes.includes(currentRoute)) {
+            navigation.navigate('HomeScreen');
+          }
         }
-      } else {
-        if (!privateRoutes.includes(currentRoute)) {
-          // navigation.navigate('HomeScreen');
-        }
+      } catch (error) {
+        console.error('Failed to fetch the token', error);
+      } finally {
+        setTimeout(() => {
+          setAuthLoading(false);
+        }, 500);
       }
     };
 
@@ -72,10 +85,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     try {
       setLoading(true);
       const resp = await validateOtpApi({ userId, code });
-      console.log(resp.data.token);
+
       if (resp.data.token) {
         await AsyncStorage.setItem('token', resp.data.token);
+        await AsyncStorage.setItem('user', JSON.stringify(resp.data.user));
         setToken(resp.data.token);
+        setUser(resp.data.user);
       }
     } catch (error) {
     } finally {
@@ -89,10 +104,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
       setToken,
       closeSession,
       validateOtp,
+      user,
     };
-  }, [token, setToken, closeSession]);
-
-  return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
+  }, [token, setToken, closeSession, user]);
+  return (
+    <AuthContext.Provider value={data}>
+      <View style={{ flex: 1, opacity: authLoading ? 0 : 1 }}>{children}</View>
+    </AuthContext.Provider>
+  );
 };
 
 // Hook personalizado para usar el contexto de autenticación

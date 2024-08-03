@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator<RootStackParams>();
 export type RootStackParams = {
   Home: undefined;
   HomeScreen: undefined;
-  Chat: { id: string };
+  Chat: { id: string; name: string };
   Chats: undefined;
   Communities: undefined;
   News: undefined;

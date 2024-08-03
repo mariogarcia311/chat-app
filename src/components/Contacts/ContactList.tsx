@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { View } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import {
   ContactContainer,
   contactHeight,
   ContactMessageContainer,
-  ContactsContainer,
   ContactTextContainer,
   HeaderContacstRow,
   TouchableContactContainer,
@@ -17,15 +17,18 @@ import { RoundButton } from '../shared/RoundButton/RoundButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useTheme } from 'styled-components/native';
 
-export const ContactList = ({ header, data }: any) => {
+export const ContactList = memo(({ header, data }: any) => {
   const theme = useTheme();
   const navigation = useRootNavigation();
 
-  const renderItem = ({ item, index }: any) => (
+  const RenderItem = ({ item, index }: any) => (
     <TouchableContactContainer
       underlayColor="rgba(255, 255, 255, 0.076)"
       onPress={() => {
-        navigation.navigate('Chat', { id: item.id });
+        navigation.navigate('Chat', {
+          id: item.completePhone,
+          name: item.name,
+        });
       }}>
       <ContactContainer>
         <Avatar
@@ -50,8 +53,9 @@ export const ContactList = ({ header, data }: any) => {
       </ContactContainer>
     </TouchableContactContainer>
   );
-  const rows = useMemo(() => data.length, [data.lengt]);
-  console.log(rows);
+
+  const rows = useMemo(() => data.length, [data.length]);
+
   return (
     <View style={{ flex: 1 }}>
       <HeaderContacts>
@@ -89,27 +93,18 @@ export const ContactList = ({ header, data }: any) => {
           </RoundButton>
         </HeaderContacstRow>
       </HeaderContacts>
-      <ContactsContainer
-        data={[...data, ...data, ...data]}
+      <FlashList
+        data={data}
+        renderItem={RenderItem}
         keyExtractor={(item: any, index) =>
           `${item?.phone}${item?.name}${index}`
         }
-        renderItem={renderItem}
-        ListHeaderComponent={() => {
-          return header;
-        }}
-        getItemLayout={(data, index) => ({
-          length: contactHeight,
-          offset: contactHeight * index,
-          index,
-        })}
-        initialNumToRender={Math.floor(rows / 15)}
-        maxToRenderPerBatch={Math.floor(rows / 2)}
-        updateCellsBatchingPeriod={20}
-        windowSize={Math.floor(rows / 2)}
+        ListHeaderComponent={() => header}
+        contentContainerStyle={{ paddingBottom: 20 }}
         removeClippedSubviews={false}
-        onEndReachedThreshold={0.4}
+        onEndReachedThreshold={0.1}
+        estimatedItemSize={contactHeight}
       />
     </View>
   );
-};
+});

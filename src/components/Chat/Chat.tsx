@@ -16,10 +16,30 @@ import { Avatar } from '../Avatar/Avatar';
 import { useParams } from '@/hooks/useRootNavigation';
 import { useRootNavigation } from '../../hooks/useRootNavigation';
 import { MessageInput } from '../shared/MessageInput/MessageInput';
+import {
+  connecToServer,
+  disconnecToServer,
+  socketSendMessage,
+} from '@/api/sockets/chatSocket';
+import { useEffect, useState } from 'react';
+import { useAuthContext } from '@/context/AuthContext';
 export const Chat = () => {
+  const [inputValue, setInputValue] = useState('');
   const theme = useTheme();
   const navigation = useRootNavigation();
   const params = useParams('Chat');
+  const { token } = useAuthContext();
+  useEffect(() => {
+    token && connecToServer(token);
+    return () => {
+      disconnecToServer();
+    };
+  }, []);
+  const handleSend = () => {
+    params?.id &&
+      socketSendMessage({ message: inputValue, receiverPhone: params?.id });
+  };
+
   return (
     <ChatContainer>
       <ChatMessageContainer>
@@ -42,7 +62,7 @@ export const Chat = () => {
               size={45}
             />
             <Text size={20} weight={500}>
-              {Number(params?.id) % 2 === 0 ? 'Mario Andrés' : 'Juan Daniel'}
+              {params?.name}
             </Text>
           </HeaderChatRow>
           <HeaderChatRow style={{ gap: 0 }}>
@@ -69,13 +89,13 @@ export const Chat = () => {
             </RoundButton>
           </HeaderChatRow>
         </HeaderChat>
-        <MessagesContainer style={{ flex: 1 }}>
-          <Text size={30} color="tertiary">
-            Chat
-          </Text>
-        </MessagesContainer>
+        <MessagesContainer style={{ flex: 1 }}></MessagesContainer>
         <ChatInputContainer>
-          <MessageInput />
+          <MessageInput
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            handleSend={handleSend}
+          />
         </ChatInputContainer>
       </ChatMessageContainer>
       <BackgroundChat source={require('@assets/backgroundChat.png')} />

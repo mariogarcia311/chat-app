@@ -21,7 +21,6 @@ axiosInterceptor.interceptors.request.use(
 
 axiosInterceptor.interceptors.response.use(
   response => {
-    console.log('respuesta');
     if (response.data.code === '400') {
       console.log('err');
     }
@@ -32,7 +31,7 @@ axiosInterceptor.interceptors.response.use(
       const { status, data } = error.response;
       if (data.message) {
         console.error(data.message);
-
+        console.error(data.error);
         Alert.alert(
           data.error + ' ' + status,
           typeof data.message === 'string' ? data.message : data.message[0],

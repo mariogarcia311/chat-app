@@ -1,5 +1,5 @@
-import { colors } from '../constans/colors';
-import { themes } from '../constans/theme';
+import { colors } from '../constants/colors';
+import { themes } from '../constants/theme';
 import { baseTheme } from './baseTheme';
 
 export const darkTheme = {

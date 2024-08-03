@@ -36,6 +36,13 @@ export const ContactMessageContainer = styled.View<{ theme: Theme }>`
 export const ContactsContainer = styled.FlatList`
   padding: ${({ theme }) => theme.padding.overlayContainer};
   background-color: ${({ theme }) => theme.colors.bg.primary};
+  flex: 1;
+  padding-bottom: '10px';
+`;
+
+export const ScrollViewContainer = styled.ScrollView`
+  padding: ${({ theme }) => theme.padding.overlayContainer};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
 export const HeaderContacts = styled.View`
