@@ -16,7 +16,7 @@ interface PhoneLoginProps {
 
 export const PhoneLogin: React.FC<PhoneLoginProps> = ({ setUserId }) => {
   const [countryCode, setCountryCode] = useState('57');
-  const [cellPhone, setCellPhone] = useState('3127324260');
+  const [cellPhone, setCellPhone] = useState('3115413853');
   const { setLoading } = useLoadingContext();
   const theme = useTheme();
 

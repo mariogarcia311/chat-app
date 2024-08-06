@@ -1,5 +1,6 @@
 import { ContactList } from '@/components/Contacts/ContactList';
 import { useAuthContext } from '@/context/AuthContext';
+import { ContactRepository } from '@/repositories/Contact';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { parsePhoneNumber } from 'libphonenumber-js';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -16,7 +17,7 @@ import { useTheme } from 'styled-components/native';
 interface MappedContact {
   name: string;
   phone: string;
-  completePhone: string;
+  id: string;
 }
 const ContactsScreen = ({ navigation }: any) => {
   const { user } = useAuthContext();
@@ -99,7 +100,7 @@ const ContactsScreen = ({ navigation }: any) => {
           return {
             name: _cont.givenName,
             phone,
-            completePhone: phone.replace('+', ''),
+            id: phone.replace('+', ''),
             isValid: phoneNumber.isValid(),
           };
         })
@@ -109,6 +110,11 @@ const ContactsScreen = ({ navigation }: any) => {
           return 0;
         })
         .filter(({ isValid }) => isValid);
+
+      await ContactRepository.save([
+        ...mappedContactsReal,
+        { id: myPhone, isValid: true, name: 'me', phone: `+${myPhone}` },
+      ]);
 
       if (storageContacts === JSON.stringify(mappedContactsReal)) {
         return;

@@ -21,7 +21,7 @@ const addListeners = () => {
     console.log('disconnect');
   });
 
-  socket.on('message-from-serve', payload => {
+  socket.on('message-from-server', payload => {
     console.log('mensaje recibido', payload);
   });
 

@@ -26,7 +26,7 @@ export const ContactList = memo(({ header, data }: any) => {
       underlayColor="rgba(255, 255, 255, 0.076)"
       onPress={() => {
         navigation.navigate('Chat', {
-          id: item.completePhone,
+          id: item.id,
           name: item.name,
         });
       }}>

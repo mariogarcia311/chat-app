@@ -6,7 +6,10 @@ import {
   ChatMessageContainer,
   HeaderChat,
   HeaderChatRow,
+  MessageContainer,
+  messageHeight,
   MessagesContainer,
+  MessageTextContainer,
 } from './Chat.styled';
 import { RoundButton } from '../shared/RoundButton/RoundButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -21,23 +24,45 @@ import {
   disconnecToServer,
   socketSendMessage,
 } from '@/api/sockets/chatSocket';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAuthContext } from '@/context/AuthContext';
+import useMessagesStore from '@/store/useMessagesStore';
+import { FlashList } from '@shopify/flash-list';
 export const Chat = () => {
   const [inputValue, setInputValue] = useState('');
+
+  const chatListRef = useRef<FlashList<any>>(null);
   const theme = useTheme();
   const navigation = useRootNavigation();
   const params = useParams('Chat');
-  const { token } = useAuthContext();
-  useEffect(() => {
-    token && connecToServer(token);
-    return () => {
-      disconnecToServer();
-    };
-  }, []);
+  const socketSendMessage = useMessagesStore(state => state.sendMessage);
+  const refreshMessage = useMessagesStore(state => state.refreshMessage);
+  const messages = useMessagesStore(state => state.messages);
+  const myPhone = useMessagesStore(state => state.myPhone);
+  const setChatId = useMessagesStore(state => state.setChatId);
+
   const handleSend = () => {
     params?.id &&
       socketSendMessage({ message: inputValue, receiverPhone: params?.id });
+  };
+
+  useEffect(() => {
+    refreshMessage(params?.id);
+    setChatId(params?.id);
+    return () => {
+      refreshMessage(null);
+    };
+  }, []);
+
+  const RenderItem = ({ item, index }: any) => {
+    console.log(item);
+    return (
+      <MessageContainer>
+        <MessageTextContainer me={item.sender === myPhone}>
+          <Text size={15}>{item.message}</Text>
+        </MessageTextContainer>
+      </MessageContainer>
+    );
   };
 
   return (
@@ -89,7 +114,22 @@ export const Chat = () => {
             </RoundButton>
           </HeaderChatRow>
         </HeaderChat>
-        <MessagesContainer style={{ flex: 1 }}></MessagesContainer>
+        <MessagesContainer
+          style={{ flex: 1, width: '100%', display: 'flex', height: '100%' }}>
+          {!!messages.length ? (
+            <FlashList
+              data={messages}
+              renderItem={RenderItem}
+              keyExtractor={(item: any, index) => `${item?.id}}`}
+              contentContainerStyle={{ paddingBottom: 20 }}
+              removeClippedSubviews={false}
+              onEndReachedThreshold={0.1}
+              estimatedItemSize={messageHeight}
+              ref={chatListRef}
+              inverted
+            />
+          ) : null}
+        </MessagesContainer>
         <ChatInputContainer>
           <MessageInput
             inputValue={inputValue}
@@ -99,15 +139,6 @@ export const Chat = () => {
         </ChatInputContainer>
       </ChatMessageContainer>
       <BackgroundChat source={require('@assets/backgroundChat.png')} />
-    </ChatContainer>
-  );
-};
-
-const Header = () => {
-  return (
-    <ChatContainer>
-      <Text size={30}>Chat</Text>
-      <BackgroundChat />
     </ChatContainer>
   );
 };

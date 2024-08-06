@@ -14,6 +14,7 @@ import React, {
 import { useLoadingContext } from './LoadingContext';
 import { View } from 'react-native';
 import { User } from '@/api/interfaces/apiLogin.interfaces';
+import useMessagesStore from '@/store/useMessagesStore';
 
 interface AuthContextType {
   token: string | null;
@@ -38,6 +39,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [authLoading, setAuthLoading] = useState<boolean>(true);
+  const connectSocket = useMessagesStore(state => state.connect);
+  const disconnectSocket = useMessagesStore(state => state.disconnect);
 
   const navigation = useRootNavigation();
 
@@ -80,6 +83,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 
     fetchToken();
   }, [token, currentRoute]);
+
+  useEffect(() => {
+    user?.completePhone &&
+      token &&
+      connectSocket({ token, myPhone: user.completePhone });
+    return () => {
+      disconnectSocket();
+    };
+  }, [token, user?.completePhone]);
 
   const validateOtp = async ({ userId, code }: any) => {
     try {

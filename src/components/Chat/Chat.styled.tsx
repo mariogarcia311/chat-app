@@ -1,3 +1,4 @@
+import { Theme } from '@/core/types/theme.type';
 import styled from 'styled-components/native';
 
 export const ChatContainer = styled.View`
@@ -43,9 +44,30 @@ export const HeaderChatRow = styled.View`
 `;
 
 export const MessagesContainer = styled.View`
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
 `;
 
 export const ChatInputContainer = styled.View``;
+
+export const messageHeight = 50;
+export const MessageContainer = styled.TouchableOpacity`
+  display: flex;
+  width: 100%;
+  /* height: ${messageHeight}px; */
+  margin-bottom: 5px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+`;
+
+export const MessageTextContainer = styled.View<{ theme: Theme; me: boolean }>`
+  display: flex;
+  max-width: 70%;
+  background-color: ${({ theme, me }) =>
+    me ? theme.colors.chat.bg.secondary : theme.colors.chat.bg.primary};
+  align-self: ${({ me }) => (me ? 'flex-end' : 'flex-start')};
+  padding: 8px;
+  border-radius: 10px;
+`;

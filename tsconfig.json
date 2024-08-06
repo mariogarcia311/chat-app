@@ -5,7 +5,12 @@
     "paths": {
       "@/*": ["./src/*"],
       "@assets/*": ["./assets/*"]
-    }
+    },
+    "strict": false,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true
   },
   "includes": ["src/**/*.ts", "src/**/*.tsx", "types/styled.d.ts"]
 }

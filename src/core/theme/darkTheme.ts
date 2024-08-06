@@ -21,6 +21,12 @@ export const darkTheme = {
         secondary: colors.teal[500],
       },
     },
+    chat: {
+      bg: {
+        primary: colors.slate[500],
+        secondary: colors.teal[900],
+      },
+    },
     btn: {
       primary: colors.limeGreen[500],
       pressedPrimary: colors.limeGreen[700],
